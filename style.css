@@ -93,6 +93,10 @@ header h1 {
   background: linear-gradient(45deg, #00b09b, #96c93d);
 }
 
+.btn.view {
+  background: linear-gradient(45deg, #ffc107, #ff9800);
+}
+
 .btn.edit {
   background: linear-gradient(45deg, #2196F3, #21CBF3);
 }
@@ -102,6 +106,7 @@ header h1 {
 }
 
 .btn.add:hover,
+.btn.view:hover,
 .btn.edit:hover,
 .btn.delete:hover {
   filter: brightness(1.1);

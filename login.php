@@ -7,7 +7,6 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-// ถ้ามีการส่งฟอร์ม
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -17,12 +16,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
-        // !!! นี่คือส่วนสำคัญ !!!
+        
+        // --- [อัปเกรด] ---
+        // 1. ดึง "สิทธิ์" (permissions) ทั้งหมดที่ User นี้มี
+        $sql_perms = "SELECT p.permission_name 
+                      FROM role_permissions rp
+                      JOIN permissions p ON rp.permission_id = p.permission_id
+                      WHERE rp.role_id = :role_id";
+        
+        $stmt_perms = $pdo->prepare($sql_perms);
+        $stmt_perms->execute(['role_id' => $user['role_id']]);
+        
+        // $permissions จะเป็น Array เช่น ['user:read', 'user:update:self']
+        $permissions = $stmt_perms->fetchAll(PDO::FETCH_COLUMN);
+
+        // 2. เก็บทุกอย่างไว้ใน Session
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
-        $_SESSION['role'] = $user['role']; // <--- เก็บบทบาทไว้ใน Session
+        $_SESSION['role_id'] = $user['role_id']; // เก็บ role_id ไว้
+        $_SESSION['permissions'] = $permissions; // <-- นี่คือหัวใจใหม่!
+        
         header("Location: index.php");
         exit;
+        
     } else {
         $error = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
     }

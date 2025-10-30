@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$db   = 'testdb'; // หรือ 'user_system' ตามในรูปของคุณ
+$db   = 'testdb';
 $user = 'root';
 $pass = '';
 
@@ -10,4 +10,3 @@ try {
 } catch (PDOException $e) {
     die("เชื่อมต่อฐานข้อมูลไม่สำเร็จ: " . $e->getMessage());
 }
-?>

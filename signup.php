@@ -1,21 +1,26 @@
 <?php
 require_once 'db_connect.php';
 
+// กำหนด Role เริ่มต้นสำหรับคนสมัครใหม่
+// 3 = User (ดูได้, แก้ไขตัวเองได้)
+// 4 = Visitor (ดูได้อย่างเดียว)
+define('DEFAULT_ROLE_ID', 3); 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
     $lastname = trim($_POST['lastname']);
     $email = trim($_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // ตรวจสอบอีเมลซ้ำ
     $check = $pdo->prepare("SELECT * FROM users WHERE email=?");
     $check->execute([$email]);
     if ($check->rowCount() > 0) {
         $error = "อีเมลนี้ถูกใช้แล้ว";
     } else {
-        // เพิ่มแค่ข้อมูลหลัก Role จะถูกกำหนดเป็น 'user' อัตโนมัติ
-        $stmt = $pdo->prepare("INSERT INTO users (name, lastname, email, password) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$name, $lastname, $email, $password]);
+        // [อัปเกรด] เพิ่ม role_id ตอนสมัคร
+        $stmt = $pdo->prepare("INSERT INTO users (name, lastname, email, password, role_id) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $lastname, $email, $password, DEFAULT_ROLE_ID]);
+        
         header("Location: login.php");
         exit;
     }

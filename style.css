@@ -1,0 +1,355 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap');
+
+/* -------------------- Reset -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+  transition: all 0.25s ease;
+}
+
+/* -------------------- Body -------------------- */
+body {
+  background: linear-gradient(135deg, #74EBD5 0%, #9FACE6 100%);
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 1.2s ease;
+}
+
+/* -------------------- Header -------------------- */
+header {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  padding: 25px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 2rem;
+  color: #222;
+  letter-spacing: 1px;
+  animation: slideDown 1s ease;
+}
+
+/* -------------------- Navbar -------------------- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  color: #fff;
+  padding: 15px 30px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.logout-btn {
+  background: #ff4757;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #e84118;
+}
+
+/* -------------------- Action Bar -------------------- */
+.action-bar {
+  text-align: center;
+  margin: 30px 0;
+}
+
+/* -------------------- Buttons -------------------- */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(0);
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn.add {
+  background: linear-gradient(45deg, #00b09b, #96c93d);
+}
+
+.btn.edit {
+  background: linear-gradient(45deg, #2196F3, #21CBF3);
+}
+
+.btn.delete {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+}
+
+.btn.add:hover,
+.btn.edit:hover,
+.btn.delete:hover {
+  filter: brightness(1.1);
+}
+
+
+/* -------------------- Table -------------------- */
+table {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeUp 1s ease;
+}
+
+th, td {
+  padding: 14px 10px;
+  text-align: center;
+}
+
+thead {
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: scale(1.01);
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #4facfe;
+}
+
+.no-photo {
+  color: #888;
+  font-style: italic;
+}
+
+/* -------------------- Forms -------------------- */
+form {
+  width: 400px;
+  margin: 40px auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeUp 1s ease;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+form button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+img.preview {
+  display: block;
+  margin: 10px auto 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #4facfe;
+}
+
+/* -------------------- Auth Page -------------------- */
+
+/* -------------------- AUTH PAGES -------------------- */
+/* ใช้เฉพาะหน้า login / signup เท่านั้น */
+/* จะไม่ไปยุ่งกับส่วนอื่นในเว็บ */
+
+.auth-bg {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-container {
+  background: #fff;
+  padding: 20px 5px;
+  border-radius: 0px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.auth-container h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.auth-container input:focus {
+  border-color: #667eea;
+}
+
+.auth-container button {
+  padding: 12px;
+  background: #667eea;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.auth-container button:hover {
+  background: #5567d4;
+}
+
+.auth-container p {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.auth-container a {
+  color: #764ba2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+/* -------------------- Footer -------------------- */
+footer {
+  text-align: center;
+  margin-top: auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* -------------------- Animation -------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  form {
+    width: 90%;
+  }
+
+  .auth-container {
+    width: 90%; 
+    padding: 30px 25px;
+  }
+}
+

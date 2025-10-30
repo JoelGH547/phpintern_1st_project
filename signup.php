@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($check->rowCount() > 0) {
         $error = "อีเมลนี้ถูกใช้แล้ว";
     } else {
+        // เพิ่มแค่ข้อมูลหลัก Role จะถูกกำหนดเป็น 'user' อัตโนมัติ
         $stmt = $pdo->prepare("INSERT INTO users (name, lastname, email, password) VALUES (?, ?, ?, ?)");
         $stmt->execute([$name, $lastname, $email, $password]);
         header("Location: login.php");

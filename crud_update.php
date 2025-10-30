@@ -1,14 +1,28 @@
 <?php
+require_once 'auth_check.php'; // 1. เรียกยาม
 require_once 'db_connect.php';
 
-$id = $_GET['id'] ?? null;
-if (!$id) {
+$id_to_edit = $_GET['id'] ?? null;
+$logged_in_user_id = $_SESSION['user_id'];
+
+if (!$id_to_edit) {
     header("Location: index.php");
     exit;
 }
 
+// 2. ตรวจสอบสิทธิ์ (Admin แก้ได้ทุกคน, User แก้ได้แค่ตัวเอง)
+if (!isAdmin()) {
+    // ถ้าไม่ใช่ Admin, เช็คต่อ
+    if (!isUser() || $id_to_edit != $logged_in_user_id) {
+        // ถ้าไม่ใช่ User หรือ ID ที่จะแก้ ไม่ตรงกับ ID ตัวเอง
+        http_response_code(403);
+        die("Access Denied. You can only edit your own profile.");
+    }
+}
+
+// ถ้าผ่านมาได้ (เป็น Admin หรือ เป็น User ที่แก้ของตัวเอง)
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id=?");
-$stmt->execute([$id]);
+$stmt->execute([$id_to_edit]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -46,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 <style>
+/* ... (style เหมือนเดิม) ... */
 body {
   background: linear-gradient(135deg, #74EBD5, #9FACE6);
   min-height: 100vh;
@@ -129,6 +144,7 @@ img#preview {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
+/* ... (javascript เหมือนเดิม) ... */
 let cropper;
 const input = document.getElementById('photoInput');
 const image = document.getElementById('preview');

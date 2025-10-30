@@ -1,5 +1,12 @@
 <?php
+require_once 'auth_check.php'; // 1. เรียกยาม
 require_once 'db_connect.php';
+
+// 2. ตรวจสอบสิทธิ์ (Admin เท่านั้น)
+if (!isAdmin()) {
+    http_response_code(403);
+    die("Access Denied. You do not have permission to create users.");
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $photoName = null;
@@ -31,8 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 <style>
+/* ... (style เหมือนเดิม) ... */
 body {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #74EBD5, #9FACE6);
   color: #333;
   min-height: 100vh;
 }
@@ -94,6 +102,7 @@ img#preview {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
+/* ... (javascript เหมือนเดิม) ... */
 let cropper;
 const input = document.getElementById('photoInput');
 const image = document.getElementById('preview');

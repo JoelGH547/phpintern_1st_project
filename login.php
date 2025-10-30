@@ -2,6 +2,11 @@
 session_start();
 require_once 'db_connect.php';
 
+if (isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit;
+}
+
 // ถ้ามีการส่งฟอร์ม
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
@@ -12,8 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
+        // !!! นี่คือส่วนสำคัญ !!!
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
+        $_SESSION['role'] = $user['role']; // <--- เก็บบทบาทไว้ใน Session
         header("Location: index.php");
         exit;
     } else {

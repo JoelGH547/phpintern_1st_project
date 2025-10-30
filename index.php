@@ -1,11 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
-
+require_once 'auth_check.php'; // 1. เรียกยาม (เช็ค Login + โหลดฟังก์ชัน isAdmin)
 require_once 'db_connect.php';
+
+// ( auth_check.php จัดการเช็ค user_id แล้ว ไม่ต้องเช็คซ้ำ)
+
 $users = $pdo->query("SELECT * FROM users ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
@@ -26,9 +24,12 @@ $users = $pdo->query("SELECT * FROM users ORDER BY id ASC")->fetchAll(PDO::FETCH
 </header>
 
 <main>
+
+  <?php if (isAdmin()): ?>
   <div class="action-bar">
       <a href="crud_create.php" class="btn add">+ เพิ่มข้อมูล</a>
   </div>
+  <?php endif; ?>
 
   <table>
     <thead>
@@ -57,9 +58,15 @@ $users = $pdo->query("SELECT * FROM users ORDER BY id ASC")->fetchAll(PDO::FETCH
           <?php endif; ?>
         </td>
         <td><?= $u['created_at'] ?></td>
+        
         <td class="action-links">
-          <a href="crud_update.php?id=<?= $u['id'] ?>" class="btn edit">แก้ไข</a>
-          <a href="crud_delete.php?id=<?= $u['id'] ?>" class="btn delete" onclick="return confirm('ลบข้อมูลนี้หรือไม่?')">ลบ</a>
+          <?php if (isAdmin()): ?>
+            <a href="crud_update.php?id=<?= $u['id'] ?>" class="btn edit">แก้ไข</a>
+            <a href="crud_delete.php?id=<?= $u['id'] ?>" class="btn delete" onclick="return confirm('ลบข้อมูลนี้หรือไม่?')">ลบ</a>
+          
+          <?php elseif (isUser() && $u['id'] == $_SESSION['user_id']): ?>
+            <a href="crud_update.php?id=<?= $u['id'] ?>" class="btn edit">แก้ไข</a>
+          <?php endif; ?>
         </td>
       </tr>
     <?php endforeach; ?>
